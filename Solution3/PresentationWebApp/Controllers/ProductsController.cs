@@ -100,18 +100,18 @@ namespace PresentationWebApp.Controllers
         } //fiddler, burp, zap, postman
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(Guid id)
+  
+        public IActionResult Disable(Guid id)
         {
             try
             {
-                _productsService.DeleteProduct(id);
+                _productsService.DisableProduct(id);
                 TempData["feedback"] = "Product was deleted";
             }
             catch (Exception ex)
             {
-                //log your error 
-
-                TempData["warning"] = "Product was not deleted"; //Change from ViewData to TempData
+                //log your error S
+                TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
             }
 
             return RedirectToAction("Index");

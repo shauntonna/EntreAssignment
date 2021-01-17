@@ -16,7 +16,7 @@ namespace ShoppingCart.Domain.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; } // C581B912-DF44-434B-8AD4-5343FC087507
+        public Guid id { get; set; } // C581B912-DF44-434B-8AD4-5343FC087507
 
         [Required]
         public string Name { get; set; }

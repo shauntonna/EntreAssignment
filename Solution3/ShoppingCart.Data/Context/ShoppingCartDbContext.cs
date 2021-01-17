@@ -20,13 +20,13 @@ namespace ShoppingCart.Data.Context
         public DbSet<Order> Orders { get; set; }
 
         //public DbSet<Cart> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Product>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<Product>().Property(x => x.id).HasDefaultValueSql("NEWID()");
  
         }
 

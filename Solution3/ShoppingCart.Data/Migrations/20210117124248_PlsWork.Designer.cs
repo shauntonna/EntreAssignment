@@ -10,8 +10,8 @@ using ShoppingCart.Data.Context;
 namespace ShoppingCart.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20210116162626_addorder")]
-    partial class addorder
+    [Migration("20210117124248_PlsWork")]
+    partial class PlsWork
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,17 +72,17 @@ namespace ShoppingCart.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetail", b =>
+            modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetails", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid>("OrderFK")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("Disable")
+                        .HasColumnType("bit");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("OrderFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
@@ -91,7 +91,7 @@ namespace ShoppingCart.Data.Migrations
                     b.Property<Guid>("ProductFK")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ProductId")
+                    b.Property<Guid?>("Productid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
@@ -99,16 +99,16 @@ namespace ShoppingCart.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("OrderFK");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Productid");
 
                     b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.Product", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWID()");
@@ -136,22 +136,24 @@ namespace ShoppingCart.Data.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetail", b =>
+            modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetails", b =>
                 {
                     b.HasOne("ShoppingCart.Domain.Models.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("OrderFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ShoppingCart.Domain.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("Productid");
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.Product", b =>

@@ -12,7 +12,7 @@ namespace ShoppingCart.Domain.Interfaces
         IQueryable<Product> GetProducts();
         Product GetProduct(Guid id);
 
-        void DeleteProduct(Product p);
+        void DisableProduct(Guid id);
 
         Guid AddProduct(Product p);
 

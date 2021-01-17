@@ -50,13 +50,13 @@ namespace ShoppingCart.Application.Services
 
         }
 
-        public void DeleteProduct(Guid id)
+        public void DisableProduct(Guid id)
         {
             var pToDelete = _productsRepo.GetProduct(id);
 
             if (pToDelete != null)
             {
-                _productsRepo.DeleteProduct(pToDelete);
+                _productsRepo.DisableProduct(id);
             }
             
         }
@@ -127,7 +127,7 @@ namespace ShoppingCart.Application.Services
             var list = from p in _productsRepo.GetProducts().Where(x => x.Category.Id == category)
                        select new ProductViewModel()
                        {
-                           Id = p.Id,
+                           id = p.id,
                            Description = p.Description,
                            Name = p.Name,
                            Price = p.Price,

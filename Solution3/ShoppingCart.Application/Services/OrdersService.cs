@@ -41,7 +41,7 @@ namespace ShoppingCart.Application.Services
 
             //4. loop with the list of products and create and OrderDetail for each of the products
             // start of loop
-            OrderDetail detail = new OrderDetail();
+            OrderDetails detail = new OrderDetails();
             detail.OrderFK = orderId;
             //detail.ProductFK = 
             //4.1 deduct qty from stock

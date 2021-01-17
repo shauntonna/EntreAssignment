@@ -7,7 +7,7 @@ namespace ShoppingCart.Application.ViewModels
 {
     public class ProductViewModel
     {
-        public Guid Id { get; set; } // C581B912-DF44-434B-8AD4-5343FC087507
+        public Guid id { get; set; } // C581B912-DF44-434B-8AD4-5343FC087507
             
         [Required(ErrorMessage ="Please input a name")]
         public string Name { get; set; }
@@ -16,7 +16,8 @@ namespace ShoppingCart.Application.ViewModels
         public double Price { get; set; }
 
         public string Description { get; set; }
-      
+        public bool Disable { get; set; }
+
         public CategoryViewModel Category { get; set; }
 
         public string ImageUrl { get; set; }
