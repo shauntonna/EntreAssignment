@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ShoppingCart.Data.Repositories
 {
-    class OrdersRepository : IOrdersRepository
+    public class OrdersRepository : IOrdersRepository
     {
 
         ShoppingCartDbContext _context;

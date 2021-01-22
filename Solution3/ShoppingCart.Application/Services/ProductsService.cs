@@ -137,6 +137,11 @@ namespace ShoppingCart.Application.Services
             return list;
         }
 
+       // public IQueryable<ProductViewModel> GetProduct(Guid id)
+        //{
+
+        //}
+
 
 
     }

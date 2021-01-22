@@ -27,7 +27,10 @@ namespace PresentationWebApp.Controllers
         public IActionResult Index()
         {
             var list = _productsService.GetProducts();
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
             return View(list);
+
         }
 
         [HttpPost]
@@ -35,6 +38,16 @@ namespace PresentationWebApp.Controllers
         {
             var list = _productsService.GetProducts(keyword).ToList();
 
+            return View("Index", list);
+        }
+
+
+        [HttpPost]
+        public IActionResult Searchbycategory(int category) //using a form, and the select list must have name attribute = category
+        {
+            var list = _productsService.GetProducts(category).ToList();
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
             return View("Index", list);
         }
 

@@ -11,13 +11,15 @@
             <div class="card-body">
                 <h5 class="card-title">@p.Name</h5>
                 <p class="card-text">@p.Price</p>
-                
+
                 <a href="/Products/Details?id=@p.id" class="btn btn-primary">View Specification</a>
 
                 @if (User.IsInRole("Admin"))
                 {   //make disable
-                    <a href="/Products/Disable?id=@p.id" class="btn btn-danger">Disable</a>
+                <a href="/Products/Disable?id=@p.id" class="btn btn-danger">Disable</a>
                 }
+
+                <a href="/Cart/Details?id=@p.id" class="btn btn-primary">Add to cart</a>
 
             </div>
         </div>

@@ -1,4 +1,5 @@
 ﻿using ShoppingCart.Application.Interfaces;
+using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,14 @@ using System.Text;
 
 namespace ShoppingCart.Application.Services
 {
-    class OrdersService : IOrdersService
+    public class OrdersService : IOrdersService
     {
+        public void addOrders(string email)
+        {
+            //user must be logged in
 
+        }
+       
         /*
          approach - storing items in cart table in db
          a) user must be logged in

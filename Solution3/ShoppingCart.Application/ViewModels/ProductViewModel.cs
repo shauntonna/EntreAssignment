@@ -20,6 +20,7 @@ namespace ShoppingCart.Application.ViewModels
 
         public CategoryViewModel Category { get; set; }
 
+        [Required(ErrorMessage = "Please input an image")]
         public string ImageUrl { get; set; }
         //stock
         //supplier

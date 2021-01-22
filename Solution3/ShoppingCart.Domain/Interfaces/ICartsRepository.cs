@@ -6,15 +6,10 @@ using System.Text;
 
 namespace ShoppingCart.Domain.Interfaces
 {
-    public interface IProductsRepository
+    public interface ICartsRepository
     {
-        
+
         IQueryable<Product> GetProducts();
-        Product GetProduct(Guid id);
-
-        void DisableProduct(Guid id);
-
         Guid AddProduct(Product p);
-
     }
 }

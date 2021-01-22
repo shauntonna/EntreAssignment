@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Data.Migrations
 {
-    public partial class PlsWork : Migration
+    public partial class addorder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,7 @@ namespace ShoppingCart.Data.Migrations
                     Price = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     CategoryId = table.Column<int>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: false),
                     Stock = table.Column<int>(nullable: false),
                     Disable = table.Column<bool>(nullable: false)
                 },
