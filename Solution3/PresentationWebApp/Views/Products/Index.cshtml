@@ -1,5 +1,4 @@
-﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
-
+﻿@model PagingList<ShoppingCart.Application.ViewModels.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,11 +11,6 @@
     @Html.Partial("SearchPartial")
 
 </div>
-
-
-
-
-
 <div class="container">
     <div class="row">
 
@@ -24,5 +18,18 @@
     </div>
 </div>
 
+@{ 
+    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.NextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-pageNumber ="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
  
-
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

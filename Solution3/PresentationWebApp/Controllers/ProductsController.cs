@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PresentationWebApp.Models;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
+using ShoppingCart.Domain.Models;
 
 namespace PresentationWebApp.Controllers
 {
@@ -24,20 +27,23 @@ namespace PresentationWebApp.Controllers
             _env = env;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageNumber=1)
         {
             var list = _productsService.GetProducts();
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View(list);
+            return View(await PagingList<ProductViewModel>.CreateAsync(list, pageNumber,5));
 
         }
+
+
 
         [HttpPost]
         public IActionResult Search(string keyword) //using a form, and the select list must have name attribute = category
         {
             var list = _productsService.GetProducts(keyword).ToList();
-
+            var listOfCategeories = _categoriesService.GetCategories();
+            ViewBag.Categories = listOfCategeories;
             return View("Index", list);
         }
 
