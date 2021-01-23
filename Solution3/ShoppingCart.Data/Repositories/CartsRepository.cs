@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Data.Context;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
@@ -16,16 +17,28 @@ namespace ShoppingCart.Data.Repositories
             _context = context;
 
         }
-        public IQueryable<Product> GetProducts()
+        public int AddProduct(Cart cart)
         {
-            return _context.Products;
-        }
-        public Guid AddProduct(Product p)
-        {
-            
-            _context.Products.Add(p);
+            _context.Carts.Add(cart);
             _context.SaveChanges();
-            return p.id;
+            return cart.Id;
+        }
+
+        public Cart userCart(string email)
+        {
+            return _context.Carts.Include(x => x.CartItems).SingleOrDefault(x => x.Email == email);
+        }
+
+        public void delete(Cart cart)
+        {
+            _context.Carts.Remove(cart);
+            _context.SaveChanges();
+        }
+
+        public void update(Cart cart)
+        {
+            _context.Entry(cart);
+            _context.SaveChanges();
         }
     }
 }

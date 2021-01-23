@@ -1,13 +1,16 @@
-﻿@model IEnumerable<ShoppingCart.Application.ViewModels.CartViewModel>
+﻿@model IEnumerable<ShoppingCart.Application.ViewModels.CartItemViewModel>
 
 @foreach (var p in Model)
 {
     <div class="col-4">
         <div class="card" style="width: 20rem; height:38rem">
             <div class="card-body">
-                <h5 class="card-title">@p.Email</h5>
+                <h5 class="card-title">@p.Cart.Email</h5>
+                <h5 class="card-title">@p.Cart.price</h5>
+                <h5 class="card-title">@p.Cart.Member</h5>
+                <h5 class="card-title>@p.Product.Name</h5>
                 <!-- <h5 class="card-title"> p.Name</h5>
-                <p class="card-text">€ p.Price</p-->
+    <p class="card-text">€ p.Price</p-->
             </div>
         </div>
     </div>

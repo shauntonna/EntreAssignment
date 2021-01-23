@@ -7,17 +7,12 @@ namespace ShoppingCart.Application.ViewModels
 {
     public class CartViewModel
     {
-        public Guid id { get; set; }
+        public int id { get; set; }
       
-        public int Qty { get; set; }
-
-        public virtual Product Product { get; set; }
-
-
-        public Guid Product_FK { get; set; }
+        public Double Price { get; set; }
 
         public string Email { get; set; }
 
-      
+        public IEnumerable<CartItem> CartItems { get; set; }
     }
 }

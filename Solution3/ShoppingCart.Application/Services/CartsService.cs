@@ -1,6 +1,8 @@
-﻿using ShoppingCart.Application.Interfaces;
+﻿using AutoMapper;
+using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Domain.Interfaces;
+using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,26 +12,57 @@ namespace ShoppingCart.Application.Services
 {
     public class CartsService : ICartsService
     {
-        private ICartsRepository _cartRepo;
-
-        public CartsService(ICartsRepository cartRepository)
+        private ICartsRepository _cartRep;
+        private IMapper _mapper;
+    
+ 
+       
+        public CartsService(ICartsRepository cartRepository, IMapper mapper)
         {
-            _cartRepo = cartRepository;
+            _mapper = mapper;
+            _cartRep = cartRepository;
         }
 
-        public IQueryable<CartViewModel> getcarts()
+        public void addcart(CartViewModel cart)
         {
-            var list = from c in _cartRepo.GetProducts()
-                       select new CartViewModel()
-                       {
-                          
-                       };
-            return list;
+            var carts = _mapper.Map<Cart>(cart);
+
+
+            _cartRep.AddProduct(carts);
+
+    
         }
 
-        public ProductViewModel GetProduct(Guid id)
+        public void deletecart(CartViewModel cart)
         {
-            throw new NotImplementedException();
+            var pToDelete = _cartRep.userCart(cart.Email);
+
+            if (pToDelete != null)
+            {
+                _cartRep.delete(pToDelete);
+            }
+        }
+
+        public CartViewModel GetCart(string email)
+        {
+            var userCart = _cartRep.userCart(email);
+            var result = _mapper.Map<Cart, CartViewModel>(userCart);
+            return result;
+        }
+
+        public void update(CartViewModel cart)
+        {
+            Cart Update = _cartRep.userCart(cart.Email);
+            double t = 0;
+            foreach(var i in Update.CartItems)
+            {
+                t += i.Product.Price + i.Qty;
+            }
+            Update.price = t;
+
+            _cartRep.update(Update);
+
+            var result = _mapper.Map<Cart, CartViewModel>(Update);
         }
     }
 }
