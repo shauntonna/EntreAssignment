@@ -17,8 +17,6 @@ namespace ShoppingCart.Application.ViewModels
 
         public double Price { get; set; }
 
-        public bool Disable { get; set; }
-
         public Order Order { get; set; }
 
         public Guid OrderId { get; set; }

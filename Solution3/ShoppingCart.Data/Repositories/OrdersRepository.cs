@@ -3,6 +3,7 @@ using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShoppingCart.Data.Repositories
@@ -24,10 +25,9 @@ namespace ShoppingCart.Data.Repositories
 
         }
 
-        public void AddOrderDetail(OrderDetails orderDetails)
+        public IQueryable<Order> GetOrder()
         {
-            _context.OrderDetails.Add(orderDetails);
-            _context.SaveChanges();
+            return _context.Orders;
         }
     }
 }

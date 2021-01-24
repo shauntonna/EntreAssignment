@@ -6,5 +6,6 @@ namespace ShoppingCart.Application.Interfaces
 {
     public interface IOrderDetailsService
     {
+        public void addOrderDetails(string email);
     }
 }

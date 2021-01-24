@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShoppingCart.Application.Services
@@ -28,6 +30,13 @@ namespace ShoppingCart.Application.Services
                 UserEmail = email
             };
             _orderRep.AddOrder(newOrder);
+        }
+
+        public IQueryable<OrderViewModel> GetOrder()
+        {
+            var carts = _orderRep.GetOrder().ProjectTo<OrderViewModel>(_mapper.ConfigurationProvider);
+
+            return carts;
         }
 
     }

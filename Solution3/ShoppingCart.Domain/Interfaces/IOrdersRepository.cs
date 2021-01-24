@@ -1,6 +1,7 @@
 ﻿using ShoppingCart.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ShoppingCart.Domain.Interfaces
@@ -8,6 +9,7 @@ namespace ShoppingCart.Domain.Interfaces
     public interface IOrdersRepository
     {
         void AddOrder(Order order);
-        void AddOrderDetail(OrderDetails orderDetails);
+
+        IQueryable<Order> GetOrder();
     }
 }
