@@ -122,16 +122,18 @@ namespace PresentationWebApp.Controllers
             try
             {
                 var c = GetCart();
-                
-                _OrderService.Checkout(c.Email);
-                _OrderDetail.addOrderDetails(c.Email);
-                _cartService.deletecart(c);
-                TempData["feedback"] = "Order was added";
+                if (c != null)
+                {
+                    _OrderService.Checkout(c.Email);
+                    _OrderDetail.addOrderDetails(c.Email);
+                    _cartService.deletecart(c);
+                    TempData["feedback"] = "Order was added";
+                }
             }
             catch (Exception ex)
             {
                 //log your error S
-                TempData["warning"] = "Order was not deleted" + ex; //Change from ViewData to TempData
+                TempData["warning"] = "Order was not added" + ex; //Change from ViewData to TempData
                 return RedirectToAction("error", "Home");
             }
 

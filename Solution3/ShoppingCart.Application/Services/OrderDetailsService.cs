@@ -27,20 +27,28 @@ namespace ShoppingCart.Application.Services
         
         public void addOrderDetails(string email)
         {
-            var Order = _orderRep.GetOrder().Where(x => x.UserEmail == email).FirstOrDefault();
-            var cart = _cartItemRep.GetCartItems().Where(x => x.Cart.Email == email).FirstOrDefault();
-            OrderDetails newDetails = new OrderDetails
-            {
-                Id = 1,
-                Order = Order,
-                Product = cart.Product,
-                ProductFK = cart.Productid,
-                OrderFK = Order.Id,
-                Quantity = cart.Qty,
-                Price = cart.Product.Price
-                
+            
+                var Order = _orderRep.GetOrder().OrderByDescending(x => x.DatePlaced).Where(x => x.UserEmail == email).FirstOrDefault();
+                var cart = _cartItemRep.GetCartItems().Where(x => x.Cart.Email == email).FirstOrDefault();
+                foreach (var x in cart.Cart.CartItems)
+                {
+                    OrderDetails newDetails = new OrderDetails
+                    {
 
-            };
+                        Order = Order,
+                        Product = cart.Product,
+                        ProductFK = cart.Productid,
+                        OrderFK = Order.Id,
+                        Quantity = cart.Qty,
+                        Price = cart.Product.Price
+
+
+                    };
+
+                    _orderDetRep.AddOrderDetail(newDetails);
+                }
+            
+            
         }
     }
 }
