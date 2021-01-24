@@ -18,9 +18,10 @@
                 {   //make disable
                 <a href="/Products/Disable?id=@p.id" class="btn btn-danger">Disable</a>
                 }
-
+                @if (User.IsInRole("User") || User.IsInRole("Admin"))
+                {
                 <a href="/Cart/AddCart?id=@p.id" class="btn btn-primary">Add to cart</a>
-
+                }
             </div>
         </div>
     </div>

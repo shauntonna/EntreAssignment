@@ -22,7 +22,12 @@ namespace ShoppingCart.Application.Services
         }
         public void Checkout(string email)
         {
-            throw new NotImplementedException();
+            Order newOrder = new Order()
+            {
+                DatePlaced = DateTime.Now,
+                UserEmail = email
+            };
+            _orderRep.AddOrder(newOrder);
         }
 
     }

@@ -26,7 +26,8 @@ namespace ShoppingCart.Data.Repositories
 
         public void AddOrderDetail(OrderDetails orderDetails)
         {
-            throw new NotImplementedException();
+            _context.OrderDetails.Add(orderDetails);
+            _context.SaveChanges();
         }
     }
 }

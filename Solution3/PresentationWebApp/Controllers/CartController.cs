@@ -14,13 +14,14 @@ namespace PresentationWebApp.Controllers
         private readonly IProductsService _productsService;
         private readonly ICartsItemService _cartItemsService;
         private readonly ICartsService _cartService;
+        private readonly IOrdersService _OrderService;
 
-        public CartController(IProductsService productsService, ICartsItemService CartItemService, ICartsService cartService)
+        public CartController(IProductsService productsService, IOrdersService Order , ICartsItemService CartItemService, ICartsService cartService)
         {
             _productsService = productsService;
             _cartItemsService = CartItemService;
             _cartService = cartService;
-
+            _OrderService = Order;
         }
 
         public IActionResult Index()
@@ -95,8 +96,12 @@ namespace PresentationWebApp.Controllers
                 try
                 {
                 var c = GetCart();
-                _cartService.deletecart(c);
-                    TempData["feedback"] = "Cart was deleted";
+                   if(c != null)
+                    {
+                    _cartService.deletecart(c);
+                        TempData["feedback"] = "Cart was deleted";
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -107,6 +112,47 @@ namespace PresentationWebApp.Controllers
 
                 return RedirectToAction("Index");
          
+        }
+
+        public IActionResult AddOrder()
+        {
+
+            try
+            {
+                var c = GetCart();
+                _OrderService.Checkout(c.Email);
+                _cartService.deletecart(c);
+                TempData["feedback"] = "Order was added";
+            }
+            catch (Exception ex)
+            {
+                //log your error S
+                TempData["warning"] = "Order was not deleted" + ex; //Change from ViewData to TempData
+                return RedirectToAction("error", "Home");
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
+        public IActionResult AddOrderDetails()
+        {
+
+            try
+            {
+                var c = GetCart();
+                _OrderService.Checkout(c.Email);
+                TempData["feedback"] = "Order was added";
+            }
+            catch (Exception ex)
+            {
+                //log your error S
+                TempData["warning"] = "Order was not deleted" + ex; //Change from ViewData to TempData
+                return RedirectToAction("error", "Home");
+            }
+
+            return RedirectToAction("Index");
+
         }
 
     }
