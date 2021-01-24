@@ -34,9 +34,9 @@ namespace ShoppingCart.Application.Services
 
         public IQueryable<OrderViewModel> GetOrder()
         {
-            var carts = _orderRep.GetOrder().ProjectTo<OrderViewModel>(_mapper.ConfigurationProvider);
+            var Order = _orderRep.GetOrder().ProjectTo<OrderViewModel>(_mapper.ConfigurationProvider);
 
-            return carts;
+            return Order;
         }
 
     }

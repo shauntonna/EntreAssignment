@@ -10,8 +10,8 @@ using ShoppingCart.Data.Context;
 namespace ShoppingCart.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20210123214634_add")]
-    partial class add
+    [Migration("20210124232143_addeverything")]
+    partial class addeverything
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,14 +29,12 @@ namespace ShoppingCart.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("price")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email");
 
                     b.ToTable("Carts");
                 });
@@ -124,17 +122,11 @@ namespace ShoppingCart.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool>("Disable")
-                        .HasColumnType("bit");
-
                     b.Property<Guid>("OrderFK")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<Guid>("ProductFK")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("Productid")
                         .HasColumnType("uniqueidentifier");
@@ -187,13 +179,6 @@ namespace ShoppingCart.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
-                {
-                    b.HasOne("ShoppingCart.Domain.Models.Member", "Member")
-                        .WithMany()
-                        .HasForeignKey("Email");
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>

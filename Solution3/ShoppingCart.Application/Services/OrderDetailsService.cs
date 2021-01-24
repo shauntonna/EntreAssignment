@@ -37,7 +37,6 @@ namespace ShoppingCart.Application.Services
 
                         Order = Order,
                         Product = cart.Product,
-                        ProductFK = cart.Productid,
                         OrderFK = Order.Id,
                         Quantity = cart.Qty,
                         Price = cart.Product.Price
