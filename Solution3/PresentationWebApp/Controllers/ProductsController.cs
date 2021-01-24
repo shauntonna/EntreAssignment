@@ -32,29 +32,29 @@ namespace PresentationWebApp.Controllers
             var list = _productsService.GetProducts();
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View(await PagingList<ProductViewModel>.CreateAsync(list, pageNumber,5));
+            return View(await PagingList<ProductViewModel>.CreateAsync(list, pageNumber,10));
 
         }
 
 
 
         [HttpPost]
-        public IActionResult Search(string keyword) //using a form, and the select list must have name attribute = category
+        public async Task<IActionResult> Search(string keyword,int pageNumber=1) //using a form, and the select list must have name attribute = category
         {
-            var list = _productsService.GetProducts(keyword).ToList();
+            var list = _productsService.GetProducts(keyword);
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View("Index", list);
+            return View("Index",await PagingList<ProductViewModel>.CreateAsync(list, pageNumber, 10));
         }
 
 
         [HttpPost]
-        public IActionResult Searchbycategory(int category) //using a form, and the select list must have name attribute = category
+        public async Task<IActionResult> Searchbycategory(int category, int pageNumber = 1) //using a form, and the select list must have name attribute = category
         {
-            var list = _productsService.GetProducts(category).ToList();
+            var list = _productsService.GetProducts(category);
             var listOfCategeories = _categoriesService.GetCategories();
             ViewBag.Categories = listOfCategeories;
-            return View("Index", list);
+            return View("Index",await PagingList<ProductViewModel>.CreateAsync(list, pageNumber, 10));
         }
 
 

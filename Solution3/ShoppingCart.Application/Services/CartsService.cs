@@ -25,12 +25,16 @@ namespace ShoppingCart.Application.Services
 
         public void addcart(CartViewModel cart)
         {
-            var carts = _mapper.Map<Cart>(cart);
 
+            Cart newCart = new Cart()
+            {
+                Id = cart.id,
+                price = cart.Price,
+                Email = cart.Email
+            };
 
-            _cartRep.AddProduct(carts);
+            _cartRep.AddProduct(newCart);
 
-    
         }
 
         public void deletecart(CartViewModel cart)

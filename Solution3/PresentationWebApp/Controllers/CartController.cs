@@ -66,25 +66,26 @@ namespace PresentationWebApp.Controllers
                     else
                     {
                         CartItemViewModel addnewItem = new CartItemViewModel();
-                        addnewItem.ItemId = cid;
+                        addnewItem.CartIdFK = cid;
                         addnewItem.ProductFk = product.id;
                         addnewItem.Quantity = 1;
-                        _cartItemsService.Update(addnewItem);
+                        _cartItemsService.addCart(addnewItem);
                         _cartService.update(c);
                         return RedirectToAction("Index", "Products");
                     }
 
                 }
-
+                TempData["feedback"] = "Cart Item was added successfully";
                 return RedirectToAction("Index", "Products");
 
-                TempData["feedback"] = "Cart Item was added successfully";
+               
             }
             catch (Exception ex)
             {
                 //log error
-                return RedirectToAction("error", "Home");
                 TempData["warning"] = "Cart Item was not added!";
+                return RedirectToAction("error", "Home");
+                
             }
         }
 

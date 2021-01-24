@@ -10,8 +10,8 @@ using ShoppingCart.Data.Context;
 namespace ShoppingCart.Data.Migrations
 {
     [DbContext(typeof(ShoppingCartDbContext))]
-    [Migration("20210122202413_addCart")]
-    partial class addCart
+    [Migration("20210123214634_add")]
+    partial class add
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,37 +29,39 @@ namespace ShoppingCart.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email");
 
                     b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>
                 {
-                    b.Property<int>("ItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CartIdFK")
+                    b.Property<int>("Cartid")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductFk")
+                    b.Property<Guid>("Productid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.HasKey("ItemId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("CartIdFK");
+                    b.HasIndex("Cartid");
 
-                    b.HasIndex("ProductFk");
+                    b.HasIndex("Productid");
 
                     b.ToTable("CartItems");
                 });
@@ -187,17 +189,24 @@ namespace ShoppingCart.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
+                {
+                    b.HasOne("ShoppingCart.Domain.Models.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("Email");
+                });
+
             modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>
                 {
                     b.HasOne("ShoppingCart.Domain.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartIdFK")
+                        .WithMany("CartItems")
+                        .HasForeignKey("Cartid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ShoppingCart.Domain.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductFk")
+                        .HasForeignKey("Productid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

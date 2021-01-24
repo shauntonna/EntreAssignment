@@ -19,6 +19,51 @@ namespace ShoppingCart.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Cartid")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Productid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Cartid");
+
+                    b.HasIndex("Productid");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("ShoppingCart.Domain.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -140,6 +185,28 @@ namespace ShoppingCart.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ShoppingCart.Domain.Models.Cart", b =>
+                {
+                    b.HasOne("ShoppingCart.Domain.Models.Member", "Member")
+                        .WithMany()
+                        .HasForeignKey("Email");
+                });
+
+            modelBuilder.Entity("ShoppingCart.Domain.Models.CartItem", b =>
+                {
+                    b.HasOne("ShoppingCart.Domain.Models.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("Cartid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShoppingCart.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("Productid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ShoppingCart.Domain.Models.OrderDetails", b =>

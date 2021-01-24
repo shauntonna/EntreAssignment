@@ -10,8 +10,6 @@ namespace ShoppingCart.Application.ViewModels
 
         public int ItemId { get; set; }
 
-        public virtual Cart Cart { get; set; }
-
         public int CartIdFK { get; set; }
 
         public int Quantity { get; set; }

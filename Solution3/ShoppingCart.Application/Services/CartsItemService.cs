@@ -27,8 +27,18 @@ namespace ShoppingCart.Application.Services
         //add cart item
         public void addCart(CartItemViewModel cartItem)
         {
-            var myCart = _mapper.Map<CartItem>(cartItem);
-            _cartItemRep.addCart(myCart);
+
+            CartItem newCart = new CartItem()
+            {
+                Id = cartItem.ItemId,
+                Qty = cartItem.Quantity,
+                Productid = cartItem.ProductFk,
+                Cartid = cartItem.CartIdFK,
+           
+                
+            };
+
+            _cartItemRep.addCart(newCart);
         }
 
         //delete cart item
@@ -72,7 +82,7 @@ namespace ShoppingCart.Application.Services
         //returns the result of get cart items where the cart and product are equal to the parameters
         public CartItemViewModel CheckToSee(int id, Guid Product)
         {
-            var cart = _cartItemRep.GetCartItems().Where(x => x.Cartid == id && x.Productid == Product).FirstOrDefault();
+            var cart = _cartItemRep.GetCartItems().Where(x => x.Cartid == id && x.Product.id == Product).FirstOrDefault();
 
             var result = _mapper.Map<CartItem, CartItemViewModel>(cart);
 

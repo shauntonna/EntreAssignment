@@ -3,23 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ShoppingCart.Data.Migrations
 {
-    public partial class addCart : Migration
+    public partial class add : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -84,31 +71,23 @@ namespace ShoppingCart.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartItems",
+                name: "Carts",
                 columns: table => new
                 {
-                    ItemId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CartIdFK = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
-                    ProductFk = table.Column<Guid>(nullable: false)
+                    price = table.Column<double>(nullable: false),
+                    Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartItems", x => x.ItemId);
+                    table.PrimaryKey("PK_Carts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CartItems_Carts_CartIdFK",
-                        column: x => x.CartIdFK,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CartItems_Products_ProductFk",
-                        column: x => x.ProductFk,
-                        principalTable: "Products",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Carts_Members_Email",
+                        column: x => x.Email,
+                        principalTable: "Members",
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,15 +120,47 @@ namespace ShoppingCart.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CartItems_CartIdFK",
-                table: "CartItems",
-                column: "CartIdFK");
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cartid = table.Column<int>(nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    Productid = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_Cartid",
+                        column: x => x.Cartid,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Products_Productid",
+                        column: x => x.Productid,
+                        principalTable: "Products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartItems_ProductFk",
+                name: "IX_CartItems_Cartid",
                 table: "CartItems",
-                column: "ProductFk");
+                column: "Cartid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_Productid",
+                table: "CartItems",
+                column: "Productid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_Email",
+                table: "Carts",
+                column: "Email");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderFK",
@@ -173,9 +184,6 @@ namespace ShoppingCart.Data.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "Members");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
@@ -186,6 +194,9 @@ namespace ShoppingCart.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "Categories");
