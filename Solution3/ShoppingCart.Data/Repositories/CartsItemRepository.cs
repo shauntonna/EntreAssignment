@@ -32,7 +32,7 @@ namespace ShoppingCart.Data.Repositories
 
         public CartItem CartItem(int id)
         {
-            return _context.CartItems.Include(z => z.Cart).SingleOrDefault(z => z.Cartid== id);
+            return _context.CartItems.FirstOrDefault(z => z.Id == id);
         }
 
         public IQueryable<CartItem> GetCartItems()

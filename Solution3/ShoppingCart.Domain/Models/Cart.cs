@@ -12,10 +12,11 @@ namespace ShoppingCart.Domain.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public virtual Member Member { get; set; }
+        
+
         [Required]
         public double price { get; set; }
-        [ForeignKey("Member")]
+   
         public string Email { get; set; }
 
         public virtual List<CartItem> CartItems { get; set; }

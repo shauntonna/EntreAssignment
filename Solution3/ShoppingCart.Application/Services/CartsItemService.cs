@@ -17,11 +17,13 @@ namespace ShoppingCart.Application.Services
         private IMapper _mapper;
         private ICartItemRepository _cartItemRep;
         private ICartsRepository _cartsRep;
-        public CartsItemService(ICartItemRepository cartItemRe, ICartsRepository cartsRep, IMapper mapper)
+        private IProductsRepository _ProdRep;
+        public CartsItemService(ICartItemRepository cartItemRe, ICartsRepository cartsRep, IMapper mapper, IProductsRepository productRepos)
         {
             _mapper = mapper;
             _cartItemRep = cartItemRe;
             _cartsRep = cartsRep;
+            _ProdRep = productRepos;
         }
 
         //add cart item
@@ -83,11 +85,19 @@ namespace ShoppingCart.Application.Services
         public CartItemViewModel CheckToSee(int id, Guid Product)
         {
             var cart = _cartItemRep.GetCartItems().Where(x => x.Cartid == id && x.Product.id == Product).FirstOrDefault();
-
             var result = _mapper.Map<CartItem, CartItemViewModel>(cart);
+            CartItemViewModel newCartItem = new CartItemViewModel()
+            {
+                CartIdFK = cart.Cartid,
+                ItemId = cart.Id,
+                Product = result.Product,
+                ProductFk = cart.Product.id,
+                Quantity = cart.Qty
+            };
 
-            return result;
+            return newCartItem;
         }
+       
         public CartViewModel userCart(string email)
         {
             var userCart = _cartsRep.userCart(email);

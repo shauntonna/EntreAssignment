@@ -60,13 +60,13 @@ namespace ShoppingCart.Application.Services
             double t = 0;
             foreach(var i in Update.CartItems)
             {
-                t += i.Product.Price + i.Qty;
+                t += i.Product.Price * i.Qty;
             }
             Update.price = t;
 
             _cartRep.update(Update);
 
-            var result = _mapper.Map<Cart, CartViewModel>(Update);
+            _mapper.Map<Cart, CartViewModel>(Update);
         }
     }
 }

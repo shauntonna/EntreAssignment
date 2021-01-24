@@ -61,7 +61,7 @@ namespace PresentationWebApp.Controllers
                         {
                         _cartItemsService.Update(IE);
                         _cartService.update(c);
-                            return RedirectToAction("Index", "Products");
+                         return RedirectToAction("Index", "Products");
                         }
                     else
                     {
@@ -88,6 +88,8 @@ namespace PresentationWebApp.Controllers
                 
             }
         }
+
+        
 
     }
 }

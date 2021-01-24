@@ -7,7 +7,5 @@ namespace ShoppingCart.Application.Interfaces
     public interface IOrdersService
     {
         void Checkout(string email);
-
-        void addOrders(string email);
     }
 }
