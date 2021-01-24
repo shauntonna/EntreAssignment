@@ -110,6 +110,7 @@ namespace PresentationWebApp.Controllers
             {
                 //log error
                 TempData["warning"] = "Product was not added!";
+                return RedirectToAction("Error", "Home");
             }
 
            var listOfCategeories = _categoriesService.GetCategories();
@@ -131,6 +132,7 @@ namespace PresentationWebApp.Controllers
             {
                 //log your error S
                 TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction("Index");

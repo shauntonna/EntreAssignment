@@ -86,16 +86,20 @@ namespace ShoppingCart.Application.Services
         {
             var cart = _cartItemRep.GetCartItems().Where(x => x.Cartid == id && x.Product.id == Product).FirstOrDefault();
             var result = _mapper.Map<CartItem, CartItemViewModel>(cart);
-            CartItemViewModel newCartItem = new CartItemViewModel()
-            {
-                CartIdFK = cart.Cartid,
-                ItemId = cart.Id,
-                Product = result.Product,
-                ProductFk = cart.Product.id,
-                Quantity = cart.Qty
-            };
+                if (result != null)
+                {
+                    CartItemViewModel newCartItem = new CartItemViewModel()
+                    {
+                        CartIdFK = cart.Cartid,
+                        ItemId = cart.Id,
+                        Product = result.Product,
+                        ProductFk = cart.Product.id,
+                        Quantity = cart.Qty
+                    };
+                    return newCartItem;
+                }
 
-            return newCartItem;
+            return result;
         }
        
         public CartViewModel userCart(string email)

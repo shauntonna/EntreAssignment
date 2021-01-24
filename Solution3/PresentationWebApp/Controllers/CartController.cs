@@ -89,7 +89,25 @@ namespace PresentationWebApp.Controllers
             }
         }
 
-        
+        public IActionResult Delete()
+        {
+            
+                try
+                {
+                var c = GetCart();
+                _cartService.deletecart(c);
+                    TempData["feedback"] = "Cart was deleted";
+                }
+                catch (Exception ex)
+                {
+                    //log your error S
+                    TempData["warning"] = "Product was not deleted" + ex; //Change from ViewData to TempData
+                    return RedirectToAction("error", "Home");
+                }
+
+                return RedirectToAction("Index");
+         
+        }
 
     }
 }
