@@ -1,19 +1,21 @@
 ﻿@model ShoppingCart.Application.ViewModels.CartViewModel
+    <div class="card-columns" style="display: inline-block">
+        @foreach (var p in Model.CartItems)
+        {
+            <div class="col-6">
+                <div class="card" style="width: 18rem;">
+                    <img src="@p.Product.ImageUrl" class="card-img-top image" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Product.Name</h5>
+                        <p class="card-text">@p.Product.Price</p>
 
-@foreach (var p in Model.CartItems)
-{
-    <div class="col-6">
-        <div class="card" style="width: 18rem;">
-            <img src="@p.Product.ImageUrl" class="card-img-top image" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@p.Product.Name</h5>
-                <p class="card-text">@p.Product.Price</p>
-            
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </div>
-}
-
-<a href="/Cart/Delete" class="btn btn-primary">Delete cart</a>
-<a href="/Cart/AddOrder" class="btn btn-primary">Add Order</a>
-<p>@Model.Price</p>
+    <div class="row">
+        <a href="/Cart/Delete" class="btn btn-primary">Delete cart</a>
+        <a href="/Cart/AddOrder" class="btn btn-primary">Add Order</a>
+        <p>Total Price: @Model.Price</p>
+    </div>
